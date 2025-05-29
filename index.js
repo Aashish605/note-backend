@@ -2,16 +2,15 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
-import ConnectDB from './Db/db.js'
+import ConnectDB from './Db/db.js';
 import list from "./Routes/List.Routes.js";
 import Pdf from "./Routes/Pdf.Route.js";
 
 const app = express();
 
-
 app.use(
     cors({
-        origin: "http://localhost:5173", 
+        origin: "*", // Allow all origins for serverless compatibility
         credentials: true,
         methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization", "Set-Cookie"],
@@ -19,24 +18,17 @@ app.use(
     })
 );
 
+app.use(express.json()); // Ensure JSON parsing middleware is included
 
 app.get('/', (req, res) => {
-    res.send('Hello World i am aashish');
+    res.send('Hello World! Backend is running.');
 });
 
-app.use("/list",list)
+app.use("/list", list);
+app.use("/pdf", Pdf);
 
-app.use("/pdf",Pdf)
+// Connect to MongoDB
+ConnectDB();
 
-
-async function startServer() {
-    try {
-        await ConnectDB();
-        app.listen(process.env.PORT, () => {
-            console.log(`App is listening on port ${process.env.PORT}`);
-        });
-    } catch (error) {
-        console.log("error during starting server", error.message);
-    }
-}
-startServer();
+// Export the app for serverless deployment
+export default app;
