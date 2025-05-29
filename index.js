@@ -10,11 +10,10 @@ const app = express();
 
 app.use(
     cors({
-        origin: "https://note-frontend-fawn.vercel.app", 
-        credentials: true,
-        methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization", "Set-Cookie"],
-        exposedHeaders: ["Set-Cookie"]
+        origin: "https://note-frontend-fawn.vercel.app", // Allow your frontend domain
+        credentials: true, // Allow cookies and credentials
+        methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
+        allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
     })
 );
 
