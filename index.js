@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
+import session from "express-session";
 import ConnectDB from './Db/db.js';
 import list from "./Routes/List.Routes.js";
 import Pdf from "./Routes/Pdf.Route.js";
@@ -17,7 +18,20 @@ app.use(
     })
 );
 
-app.use(express.json()); 
+app.use(session({
+    resave: true,              // Changed to true to ensure session is saved
+    saveUninitialized: false,
+    proxy: true,               // Trust the reverse proxy
+    cookie: {
+        secure: true,            // Required for HTTPS
+        httpOnly: true,
+        sameSite: 'none',       // Required for cross-origin
+        maxAge: 1000 * 60 * 60 * 24 * 7,  // 7 days
+        path: '/',
+    }
+}));
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send('Hello World! Backend is running.');
