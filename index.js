@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: "*", // Allow all origins for serverless compatibility
+        origin: "https://note-frontend-fawn.vercel.app", 
         credentials: true,
         methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization", "Set-Cookie"],
@@ -18,7 +18,7 @@ app.use(
     })
 );
 
-app.use(express.json()); // Ensure JSON parsing middleware is included
+app.use(express.json()); 
 
 app.get('/', (req, res) => {
     res.send('Hello World! Backend is running.');
@@ -27,8 +27,8 @@ app.get('/', (req, res) => {
 app.use("/list", list);
 app.use("/pdf", Pdf);
 
-// Connect to MongoDB
+
 ConnectDB();
 
-// Export the app for serverless deployment
+
 export default app;
