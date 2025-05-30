@@ -8,14 +8,6 @@
     ],
     "routes": [
         {
-            "src": "/list",
-            "dest": "index.js"
-        },
-        {
-            "src": "/pdf",
-            "dest": "index.js"
-        },
-        {
             "src": "/(.*)",
             "dest": "index.js"
         }
