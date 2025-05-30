@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
     res.send('Hello World! Backend is running.');
 });
 
-app.use("/list", list);
-app.use("/pdf", Pdf);
+app.use("/", list);
+app.use("/", Pdf);
 
 
 ConnectDB();
